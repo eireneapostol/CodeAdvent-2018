@@ -28,28 +28,32 @@ import os
 import time
 
 start_time = time.time()
-f = open("./inputs/day5-test","r") 
+f = open("./inputs/day5","r") 
 
 line = f.readline()
+chars = []
+for c in line:
+    chars += [c]
+
 explosive = True
-print(line)
-print(len(line))
 
 while explosive:
+    #print(''.join(chars))
     explosive = False
-    string_after_explosion = ""
-    my_range = len(line) - 4
-    for i in range(my_range):
-        print(i)
-        print(line[i], line[i+1])
-        if (line[i].lower() == line[i+1].lower()):
-            if line[i].isupper() and line[i+i].islower():
-                if  line[i+1].isupper() and line[i].islower():
-                    explosive = True
-                    print("YES")
-        print(string_after_explosion)
-    line = string_after_explosion
-
-print(line)
+    for i in range(len(chars) - 1):
+        #print(chars[i].lower(), chars[i+1].lower())
+        if chars[i].lower() == chars[i+1].lower():
+            #print("entered")
+            #print(chars[i], chars[i+1])
+            if chars[i] != chars[i+1]:
+                #print("yes")
+                explosive = True
+                chars[i] = '0'
+                chars[i+1] = '0'
+                break
+    chars_after_explosion = [x for x in chars if x != '0']
+    chars = chars_after_explosion
+    #print(explosive)
+print(len(''.join(chars)))
 
 print("--- Part ONE %s seconds ---" % (time.time() - start_time))
